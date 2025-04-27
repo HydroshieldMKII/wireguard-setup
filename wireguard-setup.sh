@@ -17,9 +17,9 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 # Install required packages
-echo "Installing WireGuard, resolvconf, and UFW..."
+echo "Installing WireGuard and resolvconf..."
 apt update >/dev/null 2>&1
-apt install -y wireguard resolvconf ufw >/dev/null 2>&1
+apt install -y wireguard resolvconf >/dev/null 2>&1
 check_status "Failed to install required packages"
 
 # Prompt for WireGuard configuration
