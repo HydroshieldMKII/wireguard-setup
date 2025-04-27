@@ -47,6 +47,22 @@ The kill switch uses iptables rules to:
 
 This prevents your real IP address from being exposed if the VPN connection drops unexpectedly.
 
+### How do i know if the kill switch is working?
+
+1. Delete the IP address from the WireGuard network interface
+  ```bash
+  ip a del 10.2.0.2/32 dev wg
+  ```
+2. Check if you can access the internet
+  ```bash
+  ping -c 4 1.1.1.1
+  ```
+
+To recover the connection you can use the following command:
+  ```bash
+    systemctl restart wg-quick@wg
+  ```
+
 ## Usage
 
 After installation, you can use the following commands:
