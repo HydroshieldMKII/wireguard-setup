@@ -1,6 +1,6 @@
 #!/bin/bash
 # WireGuard Setup Script with Kill Switch
-# This script installs WireGuard, resolvconf and add a kill switch to the WireGuard config
+# This script installs WireGuard, resolvconf, iptables and add a kill switch to the WireGuard config
 
 # Helper to check if command executed successfully
 check_status() {
@@ -17,9 +17,9 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 # Install required packages
-echo "Installing WireGuard and resolvconf..."
+echo "Installing WireGuard, resolvconf and iptables..."
 apt update >/dev/null 2>&1
-apt install -y wireguard resolvconf >/dev/null 2>&1
+apt install -y wireguard resolvconf iptables >/dev/null 2>&1
 check_status "Failed to install required packages"
 
 # Prompt for WireGuard configuration
