@@ -21,7 +21,7 @@ This script automates the installation and configuration of WireGuard VPN with a
 
 1. Download the script:
    ```bash 
-    curl https://raw.githubusercontent.com/HydroshieldMKII/wireguard-setup/main/wireguard-setup.sh
+    curl https://raw.githubusercontent.com/HydroshieldMKII/wireguard-setup/main/wireguard-setup.sh -o wireguard-setup.sh
    ```
 
 2. Make the script executable:
