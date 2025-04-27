@@ -1,6 +1,6 @@
 #!/bin/bash
 # WireGuard Setup Script with Kill Switch
-# This script installs WireGuard, resolvconf, UFW, and adds kill switch commands to the WireGuard config
+# This script installs WireGuard, resolvconf and add a kill switch to the WireGuard config
 
 # Helper to check if command executed successfully
 check_status() {
