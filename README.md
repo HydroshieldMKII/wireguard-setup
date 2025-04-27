@@ -2,13 +2,13 @@
 
 ## Overview
 
-This script automates the installation and configuration of WireGuard VPN with an integrated kill switch on Debian-based Linux systems. The kill switch prevents traffic leakage by blocking all non-VPN connections if the VPN disconnects unexpectedly, ensuring your privacy and security.
+This script automates the installation and configuration of WireGuard VPN and implements a kill switch to prevent data leaks in case of VPN disconnection.
 
 ## Features
 
-- Automatically installs WireGuard, resolvconf, and UFW (Uncomplicated Firewall)
+- Automatically installs WireGuard and resolvconf
 - Configures WireGuard with your provided configuration
-- Implements a robust kill switch that blocks all non-VPN traffic if the VPN disconnects
+- Implements a kill switch that blocks all non-VPN traffic if the VPN disconnects
 - Preserves local network access (192.168.0.0/24)
 
 ## Requirements
@@ -36,7 +36,7 @@ This script automates the installation and configuration of WireGuard VPN with a
 
 4. When prompted, paste your WireGuard configuration. After pasting, press Ctrl+D to finish.
 
-5. The script will add the kill switch configuration and start the WireGuard service.
+5. The script will add the kill switch configuration, start and enable the WireGuard service.
 
 ## How the Kill Switch Works
 
@@ -73,8 +73,8 @@ After installation, you can use the following commands:
 
 - Start or stop the VPN (including kill switch):
   ```bash
-  sudo systemctl start wg-quick@wg
-  sudo systemctl stop wg-quick@wg
+  sudo wg-quick up wg
+  sudo wg-quick down wg
   ```
 
 ## Customization
