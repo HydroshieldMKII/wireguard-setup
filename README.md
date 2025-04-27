@@ -61,6 +61,11 @@ After installation, you can use the following commands:
   ping -I wg 8.8.8.8
   ```
 
+- Check your public IP address:
+  ```bash
+  curl ip.me
+  ```
+
 - Restart the VPN service:
   ```bash
   sudo systemctl restart wg-quick@wg
