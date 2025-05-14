@@ -35,7 +35,7 @@ The kill switch uses iptables rules to:
 2. Allow local network access (192.168.0.0/24)
 3. Automatically clean up the rules when WireGuard is properly shut down
 
-This prevents your real IP address from being exposed if the VPN connection drops unexpectedly.
+This prevents your device from leaking data if the VPN connection drops.
 
 ### How do i know if the kill switch is working?
 
