@@ -6,7 +6,7 @@ This script automates the installation and configuration of WireGuard VPN and im
 
 ## Features
 
-- Automatically installs WireGuard and resolvconf
+- Automatically installs WireGuard, resolvconf and iptables
 - Configures WireGuard with your provided configuration
 - Implements a kill switch that blocks all non-VPN traffic if the VPN disconnects
 - Preserves local network access (192.168.0.0/24)
@@ -19,24 +19,14 @@ This script automates the installation and configuration of WireGuard VPN and im
 
 ## Installation
 
-1. Download the script:
-   ```bash 
-    curl https://raw.githubusercontent.com/HydroshieldMKII/wireguard-setup/main/wireguard-setup.sh -o wireguard-setup.sh
-   ```
+```bash 
+curl https://raw.githubusercontent.com/HydroshieldMKII/wireguard-setup/main/wireguard-setup.sh -o wireguard-setup.sh
+chmod +x wireguard-setup.sh
+sudo ./wireguard-setup.sh
+```
 
-2. Make the script executable:
-   ```bash
-   chmod +x wireguard-setup.sh
-   ```
 
-3. Run the script with root privileges:
-   ```bash
-   sudo ./wireguard-setup.sh
-   ```
-
-4. When prompted, paste your WireGuard configuration. After pasting, press Ctrl+D to finish.
-
-5. The script will add the kill switch configuration, start and enable the WireGuard service.
+When prompted, paste your WireGuard configuration. After pasting, press Ctrl+D to finish.
 
 ## How the Kill Switch Works
 
