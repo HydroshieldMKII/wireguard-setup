@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # WireGuard Setup Script with Kill Switch
 # This script installs WireGuard, resolvconf, iptables and add a kill switch to the WireGuard config
 
@@ -18,6 +19,7 @@ fi
 
 # Install required packages
 echo "Installing WireGuard, resolvconf and iptables..."
+
 apt update >/dev/null 2>&1
 apt install -y wireguard resolvconf iptables >/dev/null 2>&1
 check_status "Failed to install required packages"
@@ -25,8 +27,10 @@ check_status "Failed to install required packages"
 # Prompt for WireGuard configuration
 echo "Setting up WireGuard configuration..."
 mkdir -p /etc/wireguard >/dev/null 2>&1
+
 echo "Enter your WireGuard configuration (press Ctrl+D when finished):"
 cat > /tmp/wg.conf.tmp
+
 check_status "Failed to create temporary WireGuard configuration"
 
 # Add kill switch to the configuration
@@ -43,14 +47,17 @@ check_status "Failed to create WireGuard configuration with kill switch"
 
 # Enable and start the WireGuard service
 echo "Enabling and starting WireGuard service..."
+
 systemctl daemon-reload >/dev/null 2>&1
 systemctl enable wg-quick@wg >/dev/null 2>&1
 systemctl restart wg-quick@wg >/dev/null 2>&1 || echo "Error: Failed to start WireGuard service"
+
 echo "===== Setup complete! ====="
 echo "WireGuard with built-in kill switch has been configured."
 echo "To check WireGuard connection: sudo wg show"
 echo "To check connection status: ping -I wg 8.8.8.8"
 echo "To restart the VPN: sudo systemctl restart wg-quick@wg"
+
 # Clean up
 rm -f /tmp/wg.conf.tmp >/dev/null 2>&1
 exit 0
