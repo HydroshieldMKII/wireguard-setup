@@ -2,82 +2,73 @@
 
 ## Overview
 
-This script automates the installation and configuration of WireGuard VPN and implements a kill switch to prevent data leaks in case of VPN disconnection.
+Automates WireGuard VPN installation and config, with a kill switch to block all non-VPN traffic if disconnected—while preserving local access (192.168.0.0/24).
 
 ## Features
 
-- Automatically installs WireGuard, resolvconf and iptables
-- Configures WireGuard with your provided configuration
-- Implements a kill switch that blocks all non-VPN traffic if the VPN disconnects
-- Preserves local network access (192.168.0.0/24)
+- Installs WireGuard, `resolvconf`, and `iptables`
+- Applies your WireGuard config
+- Enables kill switch to prevent leaks on VPN drop
+- Maintains LAN access
 
 ## Requirements
 
-- Debian-based Linux distribution (Ubuntu, Debian, etc.)
-- Root privileges
-- A valid WireGuard configuration from your VPN provider
+- Debian-based distro (e.g., Ubuntu, Debian)
+- Root access
+- Valid WireGuard config
 
 ## Installation
 
 ```bash 
-curl https://raw.githubusercontent.com/HydroshieldMKII/wireguard-setup/main/wireguard-setup.sh -o wireguard-setup.sh
+curl -O https://raw.githubusercontent.com/HydroshieldMKII/wireguard-setup/main/wireguard-setup.sh
 chmod +x wireguard-setup.sh
 sudo ./wireguard-setup.sh
 ```
 
+Paste your WireGuard config when prompted, then press `Ctrl+D`.
 
-When prompted, paste your WireGuard configuration. After pasting, press Ctrl+D to finish.
+## Kill Switch Details
 
-## How the Kill Switch Works
+The script sets iptables rules to:
 
-The kill switch uses iptables rules to:
-1. Block all outgoing traffic that isn't routed through the WireGuard interface
-2. Allow local network access (192.168.0.0/24)
-3. Automatically clean up the rules when WireGuard is properly shut down
+1. Block non-WireGuard traffic
+2. Allow LAN access (`192.168.0.0/24`)
+3. Auto-remove rules on VPN shutdown
 
-This prevents your device from leaking data if the VPN connection drops.
+### Test It
 
-### How do i know if the kill switch is working?
+1. Remove VPN IP:
+   ```bash
+   ip a del 10.2.0.2/32 dev wg
+   ```
+2. Ping an external IP:
+   ```bash
+   ping -c 4 1.1.1.1
+   ```
 
-1. Delete the IP address from the WireGuard network interface
-  ```bash
-  ip a del 10.2.0.2/32 dev wg
-  ```
-2. Check if you can access the internet
-  ```bash
-  ping -c 4 1.1.1.1
-  ```
-
-To recover the connection you can use the following command:
-  ```bash
-    systemctl restart wg-quick@wg
-  ```
+To restore the connection:
+```bash
+sudo systemctl restart wg-quick@wg
+```
 
 ## Usage
 
-After installation, you can use the following commands:
-
-- Check WireGuard connection status:
+- Check VPN status:
   ```bash
   sudo wg show
   ```
 
-- Test the connection:
+- Test connection:
   ```bash
   ping -I wg 8.8.8.8
   ```
 
-- Check your public IP address:
+- Check public IP:
   ```bash
   curl ip.me
   ```
 
-- Restart the VPN service:
-  ```bash
-  sudo systemctl restart wg-quick@wg
-  ```
-
-- Start or stop the VPN (including kill switch):
+- Start/stop VPN:
   ```bash
   sudo wg-quick up wg
   sudo wg-quick down wg
@@ -85,9 +76,9 @@ After installation, you can use the following commands:
 
 ## Customization
 
-- Edit the `/etc/wireguard/wg.conf` file to modify your WireGuard configuration
-- If your local network is not 192.168.0.0/24, modify the appropriate lines in the configuration
+- Modify `/etc/wireguard/wg.conf` for config changes
+- Adjust LAN subnet if not `192.168.0.0/24`
 
 ## Disclaimer
 
-This script is provided as-is with no warranty. Use at your own risk.
+Use at your own risk. No warranty provided.
